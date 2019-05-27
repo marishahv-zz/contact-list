@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from '../../../common/button';
+import Button from '../common/button';
 
-export class ToolBar extends React.PureComponent {
+export default class ToolBar extends React.PureComponent {
   render() {
     return (
       <div className="input-group mb-3">
@@ -9,7 +9,7 @@ export class ToolBar extends React.PureComponent {
           <span className="input-group-text">Person</span>
         </div>
         <input type="text" className="form-control" placeholder="Name" />
-				<Button colorStyle="btn-primary" name="Add new" />
+        <Button colorStyle="btn-primary" name="Add new" />
       </div>
     );
   }
