@@ -10,12 +10,12 @@ export default class App extends React.PureComponent {
     contacts: contactsData,
   };
 
-  handleInputChange = (evt) => {
-    const value = evt.target.value;
+  handleInputChange = (e) => {
+    const { value } = e.target;
 
-    const filteredContacts = contactsData.filter(contact => {
+    const filteredContacts = contactsData.filter((contact) => {
       const name = contact.name.toLowerCase().replace(/ /g, '');
-      return name.indexOf(value.toLowerCase()) !== -1;
+      return name.includes(value.toLowerCase());
     });
 
     this.setState({
@@ -24,12 +24,13 @@ export default class App extends React.PureComponent {
   }
 
   render() {
+    const { contacts } = this.state;
     return (
       <div className="container">
         <Header />
         <main>
-          <ToolBar inputChangeHandler={this.handleInputChange} />
-          <ContactList contacts={this.state.contacts} />
+          <ToolBar onInputChange={this.handleInputChange} />
+          <ContactList contacts={contacts} />
         </main>
       </div>
     );

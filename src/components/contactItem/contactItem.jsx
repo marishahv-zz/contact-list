@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from '../common/button';
 
 const ContactItem = ({ name, phone }) => (
@@ -11,5 +12,13 @@ const ContactItem = ({ name, phone }) => (
     </td>
   </tr>
 );
+
+ContactItem.propTypes = {
+  name: PropTypes.string.isRequired,
+  phone: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
+};
 
 export default ContactItem;

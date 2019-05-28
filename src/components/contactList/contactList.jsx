@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ContactItem from '../contactItem/contactItem';
 
 const ContactList = ({ contacts }) => (
@@ -11,5 +12,9 @@ const ContactList = ({ contacts }) => (
     </table>
   </React.Fragment>
 );
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default ContactList;
