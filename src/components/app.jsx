@@ -1,13 +1,19 @@
 import React from 'react';
 import Header from './header/header';
-import FilterableContactTable from './filterableContactList/filterableContactTable';
+import contacts from '../data';
+import ToolBar from './toolBar/toolBar';
+import ContactList from './contactList/contactList';
+
 
 export default class App extends React.PureComponent {
   render() {
     return (
       <div className="container">
         <Header />
-        <FilterableContactTable />
+        <main>
+          <ToolBar />
+          <ContactList contacts={contacts} />
+        </main>
       </div>
     );
   }

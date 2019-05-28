@@ -1,5 +1,5 @@
 import React from 'react';
 
-const Button = props => <button type="button" className={`btn ml-4 ${props.colorStyle}`}>{props.name}</button>;
+const Button = ({ name, colorStyle }) => <button type="button" className={`btn ml-4 ${colorStyle}`}>{name}</button>;
 
 export default Button;
