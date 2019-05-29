@@ -3,6 +3,8 @@ import Header from './header/header';
 import contactsData from '../data';
 import ToolBar from './toolBar/toolBar';
 import ContactList from './contactList/contactList';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import EditForm from './editForm/editForm';
 
 
 export default class App extends React.Component {
@@ -34,10 +36,13 @@ export default class App extends React.Component {
     return (
       <div className="container">
         <Header />
-        <main>
-          <ToolBar onInputChange={this.handleInputChange} />
-          <ContactList contacts={contacts} onDeleteClick={this.deleteContact} />
-        </main>
+        <Router>
+          <main>
+            <ToolBar onInputChange={this.handleInputChange} />
+            <ContactList contacts={contacts} onDeleteClick={this.deleteContact} />
+          </main>
+          <Route path="/edit" render={props => (<EditForm title="Edit contact" {...props} />)} />
+        </Router>
       </div>
     );
   }
