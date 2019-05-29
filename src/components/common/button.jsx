@@ -9,9 +9,4 @@ Button.propTypes = {
   onClick: PropTypes.func,
 };
 
-Button.propTypes = {
-  name: PropTypes.string.isRequired,
-  colorStyle: PropTypes.string.isRequired,
-};
-
 export default Button;
