@@ -5,7 +5,7 @@ import ToolBar from './toolBar/toolBar';
 import ContactList from './contactList/contactList';
 
 
-export default class App extends React.PureComponent {
+export default class App extends React.Component {
   state = {
     contacts: contactsData,
   };
@@ -21,7 +21,13 @@ export default class App extends React.PureComponent {
     this.setState({
       contacts: filteredContacts,
     });
-  }
+  };
+
+  deleteContact = (id) => {
+    this.setState(prevState => (
+      { contacts: prevState.contacts.filter(contact => contact.id !== id) }));
+  };
+
 
   render() {
     const { contacts } = this.state;
@@ -30,7 +36,7 @@ export default class App extends React.PureComponent {
         <Header />
         <main>
           <ToolBar onInputChange={this.handleInputChange} />
-          <ContactList contacts={contacts} />
+          <ContactList contacts={contacts} onDeleteClick={this.deleteContact} />
         </main>
       </div>
     );
