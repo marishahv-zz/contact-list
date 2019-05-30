@@ -11,7 +11,7 @@ const ContactList = ({ contacts, onDeleteClick }) => {
       onDeleteBtnClick: onDeleteClick,
     }
 
-    return <ContactItem propObj={obj} key={item.id} />;
+    return <ContactItem itemProps={obj} key={item.id} />;
   })
 
   return (

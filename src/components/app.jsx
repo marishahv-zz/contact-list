@@ -1,9 +1,9 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './header/header';
 import contactsData from '../data';
 import ToolBar from './toolBar/toolBar';
 import ContactList from './contactList/contactList';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import EditForm from './editForm/editForm';
 
 
@@ -25,11 +25,24 @@ export default class App extends React.Component {
     });
   };
 
+  addNewContact = ({ name, phone}) => {
+    const { contacts } = this.state;
+    const lastID = contacts[contacts.length - 1].id;
+    const newContact = {
+      id: lastID + 1,
+      name,
+      phone,
+    };
+
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, newContact],
+    }));
+  }
+
   deleteContact = (id) => {
     this.setState(prevState => (
       { contacts: prevState.contacts.filter(contact => contact.id !== id) }));
   };
-
 
   render() {
     const { contacts } = this.state;
@@ -37,11 +50,19 @@ export default class App extends React.Component {
       <div className="container">
         <Header />
         <Router>
-          <main>
-            <ToolBar onInputChange={this.handleInputChange} />
-            <ContactList contacts={contacts} onDeleteClick={this.deleteContact} />
-          </main>
-          <Route path="/edit" render={props => (<EditForm title="Edit contact" {...props} />)} />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <main>
+                  <ToolBar onInputChange={this.handleInputChange} />
+                  <ContactList contacts={contacts} onDeleteClick={this.deleteContact} />
+                </main>
+              )}
+            />
+            <Route path="/add-new" render={() => (<EditForm title="Edit contact" onAddClick={this.addNewContact} />)} />
+          </Switch>
         </Router>
       </div>
     );
