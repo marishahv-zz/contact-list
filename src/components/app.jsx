@@ -25,7 +25,7 @@ export default class App extends React.Component {
     });
   };
 
-  addNewContact = ({ name, phone}) => {
+  addNewContact = ({ name, phone }) => {
     const { contacts } = this.state;
     const lastID = contacts[contacts.length - 1].id;
     const newContact = {

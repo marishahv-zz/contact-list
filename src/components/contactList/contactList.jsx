@@ -9,10 +9,10 @@ const ContactList = ({ contacts, onDeleteClick }) => {
       name: item.name,
       phone: item.phone,
       onDeleteBtnClick: onDeleteClick,
-    }
+    };
 
     return <ContactItem itemProps={obj} key={item.id} />;
-  })
+  });
 
   return (
     <React.Fragment>

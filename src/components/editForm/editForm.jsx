@@ -28,19 +28,16 @@ export default class EditForm extends React.Component {
     const character = e.target.value;
 
     if (/^([a-z]+\s)*[a-z]+$/.test(character)) {
-      this.setState(prevState => ({
+      this.setState({
         nameValue: character,
-        phoneValue: prevState.phoneValue,
         wrongName: false,
         wrongPhone: false,
-      }));
+      });
     } else {
-      this.setState(prevState => ({
-        nameValue: prevState.nameValue,
-        phoneValue: prevState.phoneValue,
+      this.setState({
         wrongName: true,
         wrongPhone: false,
-      }));
+      });
     }
   }
 
@@ -48,19 +45,16 @@ export default class EditForm extends React.Component {
     const character = e.target.value;
 
     if (/^\d+$/.test(character)) {
-      this.setState(prevState => ({
-        nameValue: prevState.nameValue,
+      this.setState({
         phoneValue: character,
         wrongName: false,
         wrongPhone: false,
-      }));
+      });
     } else {
-      this.setState(prevState => ({
-        nameValue: prevState.nameValue,
-        phoneValue: prevState.phoneValue,
+      this.setState({
         wrongName: false,
         wrongPhone: true,
-      }));
+      });
     }
   }
 

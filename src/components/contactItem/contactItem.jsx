@@ -35,4 +35,4 @@ ContactItem.propTypes = {
     ]),
     onDeleteClick: PropTypes.func,
   }).isRequired,
-}
+};

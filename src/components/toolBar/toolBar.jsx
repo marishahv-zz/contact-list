@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Button from '../common/button';
 
 const ToolBar = ({ onInputChange }) => (
   <div className="input-group mb-3">
