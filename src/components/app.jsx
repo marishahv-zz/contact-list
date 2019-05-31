@@ -11,6 +11,7 @@ export default class App extends React.Component {
   state = {
     contacts: contactsData,
     filteredContacts: '',
+    editableContact: '',
   };
 
   handleInputChange = (e) => {
@@ -51,6 +52,26 @@ export default class App extends React.Component {
     });
   };
 
+  findContact = (id) => {
+    const { contacts } = this.state;
+
+    this.setState({
+      editableContact: contacts.find(contact => contact.id === id),
+    });
+  }
+
+
+  editContact = ({ id, name, phone }) => {
+    const { contacts } = this.state;
+    const index = contacts.findIndex(contact => contact.id === id);
+    contacts[index].name = name;
+    contacts[index].phone = phone;
+
+    this.setState({
+      contacts,
+    });
+  }
+
   getContacts = () => {
     const { contacts, filteredContacts } = this.state;
 
@@ -59,6 +80,7 @@ export default class App extends React.Component {
 
   render() {
     const contacts = this.getContacts();
+    const { editableContact } = this.state;
 
     return (
       <div className="container">
@@ -71,11 +93,12 @@ export default class App extends React.Component {
               render={() => (
                 <main>
                   <ToolBar onInputChange={this.handleInputChange} />
-                  <ContactList contacts={contacts} onDeleteClick={this.deleteContact} />
+                  <ContactList contacts={contacts} onDeleteClick={this.deleteContact} onEditClick={this.findContact} />
                 </main>
               )}
             />
-            <Route path="/add-new" render={() => (<EditForm title="Edit contact" onAddClick={this.addNewContact} />)} />
+            <Route path="/add-new" render={() => (<EditForm title="Add contact" onSaveClick={this.addNewContact} />)} />
+            <Route path="/edit" render={() => (<EditForm contact={editableContact} title="Edit contact" onSaveClick={this.editContact} />)} />
           </Switch>
         </Router>
       </div>

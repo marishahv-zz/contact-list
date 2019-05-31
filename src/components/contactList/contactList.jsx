@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ContactItem from '../contactItem/contactItem';
 
-const ContactList = ({ contacts, onDeleteClick }) => {
+const ContactList = ({ contacts, onDeleteClick, onEditClick }) => {
   const contactList = contacts.map((contact, i) => {
     const obj = {
       id: contact.id,
       name: contact.name,
       phone: contact.phone,
-      onDeleteBtnClick: onDeleteClick,
+      onDeleteClick,
+      onEditClick,
     };
 
     // eslint-disable-next-line react/no-array-index-key
@@ -30,6 +31,7 @@ const ContactList = ({ contacts, onDeleteClick }) => {
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDeleteClick: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func.isRequired,
 };
 
 export default ContactList;

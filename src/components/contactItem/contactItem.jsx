@@ -5,8 +5,13 @@ import Button from '../common/button';
 
 export default class ContactItem extends React.Component {
   deleteClickHandler = () => {
-    const { contact: { id, onDeleteBtnClick } } = this.props;
-    onDeleteBtnClick(id);
+    const { contact: { id, onDeleteClick } } = this.props;
+    onDeleteClick(id);
+  }
+
+  editClickHandler = () => {
+    const { contact: { id, onEditClick } } = this.props;
+    onEditClick(id);
   }
 
   render() {
@@ -17,8 +22,8 @@ export default class ContactItem extends React.Component {
         <td>{name}</td>
         <td>{phone}</td>
         <td>
-          <Link to="/edit" className="btn btn-primary">Edit</Link>
-          <Button colorStyle="btn-secondary" onClick={this.deleteClickHandler} name="Delete" />
+          <Link to="/edit" className="btn btn-primary" onClick={this.deleteClickHandler}>Edit</Link>
+          <Button colorStyle="btn-secondary" onClick={this.editClickHandler} name="Delete" />
         </td>
       </tr>
     );

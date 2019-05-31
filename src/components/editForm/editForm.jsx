@@ -6,18 +6,35 @@ export default class EditForm extends React.Component {
   state = {
     nameValue: '',
     phoneValue: '',
+    contactID: '',
     isNameValid: false,
     isPhoneValid: false,
   }
 
-  handleAddClick = (e) => {
-    const { onAddClick } = this.props;
-    const { nameValue, phoneValue } = this.state;
+  static getDerivedStateFromProps(nextProps) {
+    if (nextProps.contact) {
+      const { contact } = nextProps;
+
+      return {
+        nameValue: contact.name,
+        phoneValue: contact.phone,
+        contactID: contact.id,
+      };
+    }
+
+    // Return null to indicate no change to state.
+    return null;
+  }
+
+  handleSaveClick = (e) => {
+    const { onSaveClick } = this.props;
+    const { nameValue, phoneValue, contactID } = this.state;
 
     if (nameValue && phoneValue) {
-      onAddClick({
+      onSaveClick({
         name: nameValue,
         phone: phoneValue,
+        id: contactID,
       });
     } else {
       e.preventDefault();
@@ -59,7 +76,7 @@ export default class EditForm extends React.Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { title, contact } = this.props;
     const {
       nameValue, phoneValue, isNameValid, isPhoneValid,
     } = this.state;
@@ -74,7 +91,7 @@ export default class EditForm extends React.Component {
           <div className="form-group">
             <input type="text" className={`form-control ${isPhoneValid ? 'border border-danger' : ''}`} maxLength="7" value={phoneValue} onChange={this.handlePhoneInputChange} placeholder="Phone" />
           </div>
-          <Link to="/" className="btn btn-primary ml-4" onClick={this.handleAddClick}>Add</Link>
+          <Link to="/" className="btn btn-primary ml-4" onClick={this.handleSaveClick}>Save</Link>
           <Link to="/" className="btn btn-secondary ml-4">Cancel</Link>
         </form>
       </div>
@@ -84,5 +101,5 @@ export default class EditForm extends React.Component {
 
 EditForm.propTypes = {
   title: PropTypes.string.isRequired,
-  onAddClick: PropTypes.func.isRequired,
+  onSaveClick: PropTypes.func.isRequired,
 };
