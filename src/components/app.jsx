@@ -10,6 +10,7 @@ import EditForm from './editForm/editForm';
 export default class App extends React.Component {
   state = {
     contacts: contactsData,
+    filteredContacts: '',
   };
 
   handleInputChange = (e) => {
@@ -21,51 +22,44 @@ export default class App extends React.Component {
       return name.includes(value.toLowerCase());
     });
 
-    if (!value) {
-      this.setState({
-        contacts: contactsData,
-      });
-    } else {
-      this.setState({
-        contacts: filteredContacts,
-      });
-    }
+    this.setState({
+      filteredContacts,
+    });
   };
 
-  clearInput = () => {
-    // eslint-disable-next-line no-undef
-    const input = document.getElementById('filter');
-    input.value = '';
-  }
-
   addNewContact = ({ name, phone }) => {
-    const newID = contactsData.length ? (contactsData[contactsData.length - 1].id + 1) : 0;
+    const { contacts } = this.state;
+    const newID = contacts.length ? (contacts[contacts.length - 1].id + 1) : 0;
     const newContact = {
       id: newID,
       name,
       phone,
     };
 
-    contactsData.push(newContact);
-
     this.setState({
-      contacts: contactsData,
+      contacts: [...contacts, newContact],
+      filteredContacts: '',
     });
-  }
+  };
 
   deleteContact = (id) => {
-    const index = contactsData.findIndex(contact => contact.id === id);
-    contactsData.splice(index, 1);
+    const { contacts } = this.state;
 
     this.setState({
-      contacts: contactsData,
-    }, () => {
-      this.clearInput();
+      contacts: contacts.filter(contact => contact.id !== id),
+      filteredContacts: '',
     });
+  };
+
+  getContacts = () => {
+    const { contacts, filteredContacts } = this.state;
+
+    return filteredContacts || contacts;
   }
 
   render() {
-    const { contacts } = this.state;
+    const contacts = this.getContacts();
+
     return (
       <div className="container">
         <Header />

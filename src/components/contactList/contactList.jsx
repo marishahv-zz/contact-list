@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ContactItem from '../contactItem/contactItem';
 
 const ContactList = ({ contacts, onDeleteClick }) => {
-  const contactList = contacts.map((contact) => {
+  const contactList = contacts.map((contact, i) => {
     const obj = {
       id: contact.id,
       name: contact.name,
@@ -11,7 +11,8 @@ const ContactList = ({ contacts, onDeleteClick }) => {
       onDeleteBtnClick: onDeleteClick,
     };
 
-    return <ContactItem itemProps={obj} key={contact.id} />;
+    // eslint-disable-next-line react/no-array-index-key
+    return <ContactItem contact={obj} key={`${contact.id}${i}`} />;
   });
 
   return (

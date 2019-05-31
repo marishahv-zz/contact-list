@@ -5,12 +5,12 @@ import Button from '../common/button';
 
 export default class ContactItem extends React.Component {
   deleteClickHandler = () => {
-    const { itemProps: { id, onDeleteBtnClick } } = this.props;
+    const { contact: { id, onDeleteBtnClick } } = this.props;
     onDeleteBtnClick(id);
   }
 
   render() {
-    const { itemProps: { name, phone } } = this.props;
+    const { contact: { name, phone } } = this.props;
 
     return (
       <tr>
@@ -26,7 +26,7 @@ export default class ContactItem extends React.Component {
 }
 
 ContactItem.propTypes = {
-  itemProps: PropTypes.shape({
+  contact: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
     phone: PropTypes.oneOfType([
