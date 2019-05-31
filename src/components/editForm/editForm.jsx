@@ -7,8 +7,8 @@ export default class EditForm extends React.Component {
     nameValue: '',
     phoneValue: '',
     contactID: '',
-    isNameValid: false,
-    isPhoneValid: false,
+    isNameValid: true,
+    isPhoneValid: true,
   }
 
   static getDerivedStateFromProps(nextProps) {
@@ -19,6 +19,8 @@ export default class EditForm extends React.Component {
         nameValue: contact.name,
         phoneValue: contact.phone,
         contactID: contact.id,
+				isNameValid: true,
+    		isPhoneValid: true,
       };
     }
 
@@ -47,13 +49,13 @@ export default class EditForm extends React.Component {
     if (/^([a-z]+\s)*[a-z]+$/.test(character)) {
       this.setState({
         nameValue: character,
-        isNameValid: false,
-        isPhoneValid: false,
+        isNameValid: true,
+        isPhoneValid: true,
       });
     } else {
       this.setState({
-        isNameValid: true,
-        isPhoneValid: false,
+        isNameValid: false,
+        isPhoneValid: true,
       });
     }
   }
@@ -64,19 +66,19 @@ export default class EditForm extends React.Component {
     if (/^\d+$/.test(character)) {
       this.setState({
         phoneValue: character,
-        isNameValid: false,
-        isPhoneValid: false,
+        isNameValid: true,
+        isPhoneValid: true,
       });
     } else {
       this.setState({
-        isNameValid: false,
-        isPhoneValid: true,
+        isNameValid: true,
+        isPhoneValid: false,
       });
     }
   }
 
   render() {
-    const { title, contact } = this.props;
+    const { title } = this.props;
     const {
       nameValue, phoneValue, isNameValid, isPhoneValid,
     } = this.state;
@@ -86,10 +88,10 @@ export default class EditForm extends React.Component {
         <h6>{title}</h6>
         <form className="mt-4">
           <div className="form-group">
-            <input type="text" className={`form-control ${isNameValid ? 'border border-danger' : ''}`} maxLength="20" value={nameValue} onChange={this.handleNameInputChange} placeholder="Name" />
+            <input type="text" className={`form-control ${isNameValid ? '' : 'border border-danger'}`} maxLength="20" value={nameValue} onChange={this.handleNameInputChange} placeholder="Name" />
           </div>
           <div className="form-group">
-            <input type="text" className={`form-control ${isPhoneValid ? 'border border-danger' : ''}`} maxLength="7" value={phoneValue} onChange={this.handlePhoneInputChange} placeholder="Phone" />
+            <input type="text" className={`form-control ${isPhoneValid ? '' : 'border border-danger'}`} maxLength="7" value={phoneValue} onChange={this.handlePhoneInputChange} placeholder="Phone" />
           </div>
           <Link to="/" className="btn btn-primary ml-4" onClick={this.handleSaveClick}>Save</Link>
           <Link to="/" className="btn btn-secondary ml-4">Cancel</Link>

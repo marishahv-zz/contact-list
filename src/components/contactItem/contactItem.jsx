@@ -22,8 +22,8 @@ export default class ContactItem extends React.Component {
         <td>{name}</td>
         <td>{phone}</td>
         <td>
-          <Link to="/edit" className="btn btn-primary" onClick={this.deleteClickHandler}>Edit</Link>
-          <Button colorStyle="btn-secondary" onClick={this.editClickHandler} name="Delete" />
+          <Link to="/edit" className="btn btn-primary" onClick={this.editClickHandler}>Edit</Link>
+          <Button colorStyle="btn-secondary" onClick={this.deleteClickHandler} name="Delete" />
         </td>
       </tr>
     );
