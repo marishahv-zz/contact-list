@@ -7,7 +7,7 @@ const ToolBar = ({ onInputChange }) => (
     <div className="input-group-prepend">
       <span className="input-group-text">Person</span>
     </div>
-    <input type="text" className="form-control" placeholder="Name" onChange={onInputChange} />
+    <input type="text" className="form-control" id="filter" placeholder="Name" onChange={onInputChange} />
     <Link to="/add-new" className="btn btn-primary ml-4">Add new</Link>
   </div>
 );

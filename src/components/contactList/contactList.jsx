@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import ContactItem from '../contactItem/contactItem';
 
 const ContactList = ({ contacts, onDeleteClick }) => {
-  const contactList = contacts.map((item) => {
+  const contactList = contacts.map((contact) => {
     const obj = {
-      id: item.id,
-      name: item.name,
-      phone: item.phone,
+      id: contact.id,
+      name: contact.name,
+      phone: contact.phone,
       onDeleteBtnClick: onDeleteClick,
     };
 
-    return <ContactItem itemProps={obj} key={item.id} />;
+    return <ContactItem itemProps={obj} key={contact.id} />;
   });
 
   return (

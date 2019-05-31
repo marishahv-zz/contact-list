@@ -14,35 +14,55 @@ export default class App extends React.Component {
 
   handleInputChange = (e) => {
     const { value } = e.target;
+    const { contacts } = this.state;
 
-    const filteredContacts = contactsData.filter((contact) => {
+    const filteredContacts = contacts.filter((contact) => {
       const name = contact.name.toLowerCase().replace(/ /g, '');
       return name.includes(value.toLowerCase());
     });
 
-    this.setState({
-      contacts: filteredContacts,
-    });
+    if (!value) {
+      this.setState({
+        contacts: contactsData,
+      });
+    } else {
+      this.setState({
+        contacts: filteredContacts,
+      });
+    }
   };
 
+  clearInput = () => {
+    // eslint-disable-next-line no-undef
+    const input = document.getElementById('filter');
+    input.value = '';
+  }
+
   addNewContact = ({ name, phone }) => {
-    const { contacts } = this.state;
-    const lastID = contacts[contacts.length - 1].id;
+    const newID = contactsData.length ? (contactsData[contactsData.length - 1].id + 1) : 0;
     const newContact = {
-      id: lastID + 1,
+      id: newID,
       name,
       phone,
     };
 
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, newContact],
-    }));
+    contactsData.push(newContact);
+
+    this.setState({
+      contacts: contactsData,
+    });
   }
 
   deleteContact = (id) => {
-    this.setState(prevState => (
-      { contacts: prevState.contacts.filter(contact => contact.id !== id) }));
-  };
+    const index = contactsData.findIndex(contact => contact.id === id);
+    contactsData.splice(index, 1);
+
+    this.setState({
+      contacts: contactsData,
+    }, () => {
+      this.clearInput();
+    });
+  }
 
   render() {
     const { contacts } = this.state;

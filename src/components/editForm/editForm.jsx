@@ -6,8 +6,8 @@ export default class EditForm extends React.Component {
   state = {
     nameValue: '',
     phoneValue: '',
-    wrongName: false,
-    wrongPhone: false,
+    isNameValid: false,
+    isPhoneValid: false,
   }
 
   handleAddClick = (e) => {
@@ -30,13 +30,13 @@ export default class EditForm extends React.Component {
     if (/^([a-z]+\s)*[a-z]+$/.test(character)) {
       this.setState({
         nameValue: character,
-        wrongName: false,
-        wrongPhone: false,
+        isNameValid: false,
+        isPhoneValid: false,
       });
     } else {
       this.setState({
-        wrongName: true,
-        wrongPhone: false,
+        isNameValid: true,
+        isPhoneValid: false,
       });
     }
   }
@@ -47,13 +47,13 @@ export default class EditForm extends React.Component {
     if (/^\d+$/.test(character)) {
       this.setState({
         phoneValue: character,
-        wrongName: false,
-        wrongPhone: false,
+        isNameValid: false,
+        isPhoneValid: false,
       });
     } else {
       this.setState({
-        wrongName: false,
-        wrongPhone: true,
+        isNameValid: false,
+        isPhoneValid: true,
       });
     }
   }
@@ -61,7 +61,7 @@ export default class EditForm extends React.Component {
   render() {
     const { title } = this.props;
     const {
-      nameValue, phoneValue, wrongName, wrongPhone,
+      nameValue, phoneValue, isNameValid, isPhoneValid,
     } = this.state;
 
     return (
@@ -69,10 +69,10 @@ export default class EditForm extends React.Component {
         <h6>{title}</h6>
         <form className="mt-4">
           <div className="form-group">
-            <input type="text" className={`form-control ${wrongName ? 'border border-danger' : ''}`} maxLength="20" value={nameValue} onChange={this.handleNameInputChange} placeholder="Name" />
+            <input type="text" className={`form-control ${isNameValid ? 'border border-danger' : ''}`} maxLength="20" value={nameValue} onChange={this.handleNameInputChange} placeholder="Name" />
           </div>
           <div className="form-group">
-            <input type="text" className={`form-control ${wrongPhone ? 'border border-danger' : ''}`} maxLength="7" value={phoneValue} onChange={this.handlePhoneInputChange} placeholder="Phone" />
+            <input type="text" className={`form-control ${isPhoneValid ? 'border border-danger' : ''}`} maxLength="7" value={phoneValue} onChange={this.handlePhoneInputChange} placeholder="Phone" />
           </div>
           <Link to="/" className="btn btn-primary ml-4" onClick={this.handleAddClick}>Add</Link>
           <Link to="/" className="btn btn-secondary ml-4">Cancel</Link>
