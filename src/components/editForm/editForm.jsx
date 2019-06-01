@@ -3,30 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 export default class EditForm extends React.Component {
-  state = {
-    nameValue: '',
-    phoneValue: '',
-    contactID: '',
-    isNameValid: true,
-    isPhoneValid: true,
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    if (nextProps.contact) {
-      const { contact } = nextProps;
-
-      return {
-        nameValue: contact.name,
-        phoneValue: contact.phone,
-        contactID: contact.id,
-				isNameValid: true,
-    		isPhoneValid: true,
-      };
-    }
-
-    // Return null to indicate no change to state.
-    return null;
-  }
+	state = {
+		nameValue: this.props.contact ? this.props.contact.name : '',
+		phoneValue: this.props.contact ? this.props.contact.phone : '',
+		contactID: this.props.contact ? this.props.contact.id : '',
+		isNameValid: true,
+		isPhoneValid: true,
+	}
 
   handleSaveClick = (e) => {
     const { onSaveClick } = this.props;
@@ -46,7 +29,7 @@ export default class EditForm extends React.Component {
   handleNameInputChange = (e) => {
     const character = e.target.value;
 
-    if (/^([a-z]+\s)*[a-z]+$/.test(character)) {
+    if (/^[a-zA-Z][a-zA-Z\s]*$/.test(character)) {
       this.setState({
         nameValue: character,
         isNameValid: true,
@@ -63,7 +46,7 @@ export default class EditForm extends React.Component {
   handlePhoneInputChange = (e) => {
     const character = e.target.value;
 
-    if (/^\d+$/.test(character)) {
+    if (/^\d*$/.test(character)) {
       this.setState({
         phoneValue: character,
         isNameValid: true,
