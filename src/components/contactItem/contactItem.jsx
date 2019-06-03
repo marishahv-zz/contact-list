@@ -1,22 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Button from '../common/button';
 
 export default class ContactItem extends React.Component {
   deleteClickHandler = () => {
-    const { id, onDeleteClick } = this.props;
+    const { contact: { id, onDeleteClick } } = this.props;
     onDeleteClick(id);
-  }
+  };
 
   render() {
-    const { name, phone } = this.props;
+    const {
+      contact: { id, name, phone },
+    } = this.props;
 
     return (
       <tr>
         <td>{name}</td>
         <td>{phone}</td>
         <td>
-          <Button colorStyle="btn-primary" name="Edit" />
+          <Link to={`/edit/${id}`} className="btn btn-primary" onClick={this.editClickHandler}>Edit</Link>
           <Button colorStyle="btn-secondary" onClick={this.deleteClickHandler} name="Delete" />
         </td>
       </tr>
@@ -25,11 +28,13 @@ export default class ContactItem extends React.Component {
 }
 
 ContactItem.propTypes = {
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  phone: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
-  onDeleteClick: PropTypes.func.isRequired,
+  contact: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    phone: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    onDeleteClick: PropTypes.func,
+  }).isRequired,
 };
