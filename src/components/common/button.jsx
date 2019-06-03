@@ -6,7 +6,7 @@ const Button = ({ name, colorStyle, onClick }) => <button type="button" onClick=
 Button.propTypes = {
   name: PropTypes.string.isRequired,
   colorStyle: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Button;

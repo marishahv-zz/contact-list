@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 export default class EditForm extends React.Component {
-	state = {
-		nameValue: this.props.contact ? this.props.contact.name : '',
-		phoneValue: this.props.contact ? this.props.contact.phone : '',
-		contactID: this.props.contact ? this.props.contact.id : '',
-		isNameValid: true,
-		isPhoneValid: true,
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      nameValue: props.contact ? props.contact.name : '',
+      phoneValue: props.contact ? props.contact.phone : '',
+      contactID: props.contact ? props.contact.id : '',
+      isNameValid: true,
+      isPhoneValid: true,
+    };
+  }
 
   handleSaveClick = (e) => {
     const { onSaveClick } = this.props;
@@ -87,4 +90,17 @@ export default class EditForm extends React.Component {
 EditForm.propTypes = {
   title: PropTypes.string.isRequired,
   onSaveClick: PropTypes.func.isRequired,
+  contact: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    phone: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    onDeleteClick: PropTypes.func,
+  }),
+};
+
+EditForm.defaultProps = {
+  contact: null,
 };
