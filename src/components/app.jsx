@@ -24,18 +24,16 @@ export default class App extends React.Component {
   filterListByValue = () => {
     const { contacts, searchValue: value } = this.state;
 
-    const filteredContacts = contacts.filter((contact) => {
+    return contacts.filter((contact) => {
       const name = contact.name.toLowerCase().replace(/ /g, '');
       return name.includes(value.toLowerCase());
     });
-
-    return filteredContacts;
   };
 
   filterListByID = (id) => {
     const { contacts } = this.state;
 
-    return contacts.find(contact => contact.id === (+id));
+    return contacts.find(contact => contact.id === parseInt(id, 10));
   };
 
   addNewContact = ({ name, phone }) => {
