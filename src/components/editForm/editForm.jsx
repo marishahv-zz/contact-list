@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { addContact } from '../../actions';
+import Button from '../common/button';
 
-export default class EditForm extends React.Component {
+class EditForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,12 +17,29 @@ export default class EditForm extends React.Component {
     };
   }
 
+  // initState = () => {
+  //   // const { id } = this.props.match;
+  //   // if(id) {
+  //   //   const { contacts }
+  //   // }
+  //
+  //
+  //   return {
+  //     nameValue: props.contact ? props.contact.name : '',
+  //     phoneValue: props.contact ? props.contact.phone : '',
+  //     contactID: props.contact ? props.contact.id : '',
+  //     isNameValid: true,
+  //     isPhoneValid: true,
+  //   };
+  // }
+
   handleSaveClick = (e) => {
-    const { onSaveClick } = this.props;
+    e.preventDefault();
+    const { handleSaveClick, history } = this.props;
     const { nameValue, phoneValue, contactID } = this.state;
 
     if (nameValue && phoneValue) {
-      onSaveClick({
+      handleSaveClick({
         name: nameValue,
         phone: phoneValue,
         id: contactID,
@@ -27,6 +47,7 @@ export default class EditForm extends React.Component {
     } else {
       e.preventDefault();
     }
+    history.push('/');
   }
 
   handleNameInputChange = (e) => {
@@ -79,7 +100,7 @@ export default class EditForm extends React.Component {
           <div className="form-group">
             <input type="text" className={`form-control ${isPhoneValid ? '' : 'border border-danger'}`} maxLength="7" value={phoneValue} onChange={this.handlePhoneInputChange} placeholder="Phone" />
           </div>
-          <Link to="/" className="btn btn-primary ml-4" onClick={this.handleSaveClick}>Save</Link>
+          <Button colorStyle="btn-primary" name="Save" onClick={this.handleSaveClick} />
           <Link to="/" className="btn btn-secondary ml-4">Cancel</Link>
         </form>
       </div>
@@ -87,9 +108,29 @@ export default class EditForm extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  handleSaveClick: (contact) => {
+    dispatch(addContact(contact));
+  },
+});
+
+const mapStateToProps = (state, ownProps) => {
+  const { id } = ownProps.match.params;
+  if (id) {
+    const { contacts } = state;
+    // eslint-disable-next-line radix
+    const contact = contacts.find(contactItem => contactItem.id === parseInt(id));
+
+    return { contact };
+  }
+  return {};
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditForm));
+
 EditForm.propTypes = {
   title: PropTypes.string.isRequired,
-  onSaveClick: PropTypes.func.isRequired,
+  handleSaveClick: PropTypes.func.isRequired,
   contact: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,

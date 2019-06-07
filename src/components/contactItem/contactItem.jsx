@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Button from '../common/button';
+import { editContact, deletetContact } from '../../actions';
 
-export default class ContactItem extends React.Component {
-  deleteClickHandler = () => {
-    const { contact: { id, onDeleteClick } } = this.props;
-    onDeleteClick(id);
-  };
+class ContactItem extends React.Component {
+  // editClickHandler = () => {
+  //   // const { contact: { contact, onDeleteClick } } = this.props;
+  //   const { contact, onEditClick } = this.props;
+  //   onEditClick(contact);
+  // };
 
   render() {
-    const {
-      contact: { id, name, phone },
-    } = this.props;
+    const { contact: { id, name, phone }, onDeleteClick } = this.props;
 
     return (
       <tr>
@@ -20,12 +21,35 @@ export default class ContactItem extends React.Component {
         <td>{phone}</td>
         <td>
           <Link to={`/edit/${id}`} className="btn btn-primary" onClick={this.editClickHandler}>Edit</Link>
-          <Button colorStyle="btn-secondary" onClick={this.deleteClickHandler} name="Delete" />
+          <Button colorStyle="btn-secondary" onClick={onDeleteClick} name="Delete" />
         </td>
       </tr>
     );
   }
 }
+
+// const ContactItem = ({ contact: { id, name, phone }, onEditClick, onDeleteClick }) => (
+//   <tr>
+//     <td>{name}</td>
+//     <td>{phone}</td>
+//     <td>
+//       <Link to={`/edit/${id}`} className="btn btn-primary" onClick={editClickHandler}>Edit</Link>
+//       <Button colorStyle="btn-secondary" onClick={onDeleteClick} name="Delete" />
+//     </td>
+//   </tr>
+// );
+
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { contact: { id } } = ownProps;
+
+  return {
+    onDeleteClick: () => dispatch(deletetContact(id)),
+    onEditClick: () => dispatch(editContact(id)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ContactItem);
 
 ContactItem.propTypes = {
   contact: PropTypes.shape({

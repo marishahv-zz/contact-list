@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import ContactItem from '../contactItem/contactItem';
+//import { deletetContact } from '../../actions';
 
 const ContactList = ({ contacts, onDeleteClick }) => {
   const contactList = contacts.map((contact, index) => {
@@ -8,7 +10,7 @@ const ContactList = ({ contacts, onDeleteClick }) => {
       id: contact.id,
       name: contact.name,
       phone: contact.phone,
-      onDeleteClick,
+      //onDeleteClick,
     };
 
     // eslint-disable-next-line react/no-array-index-key
@@ -32,4 +34,9 @@ ContactList.propTypes = {
   onDeleteClick: PropTypes.func.isRequired,
 };
 
-export default ContactList;
+// export default ContactList;
+
+const mapStateToProps = state => ({ contacts: state.contacts });
+//const mapStateToProps = state => ({ contacts: state.contacts });
+
+export default connect(mapStateToProps)(ContactList);
