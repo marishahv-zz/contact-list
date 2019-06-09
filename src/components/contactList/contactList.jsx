@@ -21,7 +21,7 @@ const ContactList = ({ contacts, onDeleteClick }) => {
 
 	const filteredContacs = contacts.filter((contact) => {
       const name = contact.name.toLowerCase().replace(/ /g, '');
-      return name.includes(value.toLowerCase());
+      return name.includes(searchValue.toLowerCase());
     });
 
 	const contactList = filteredContacs.map((contact, index) => {

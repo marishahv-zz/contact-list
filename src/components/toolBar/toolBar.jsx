@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const ToolBar = ({ onInputChange }) => (
   <div className="input-group mb-3">
@@ -16,4 +17,11 @@ ToolBar.propTypes = {
   onInputChange: PropTypes.func.isRequired,
 };
 
-export default ToolBar;
+const mapDispatchToProps = (dispatch) => {
+
+  return {
+    onDeleteClick: () => dispatch(deletetContact(id)),
+    onEditClick: () => dispatch(editContact(id)),
+  };
+};
+export default connect(null, mapDispatchToProps)(ToolBar);
