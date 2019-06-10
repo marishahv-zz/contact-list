@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
-import { addContact } from '../../actions';
+import { addContact, editContact } from '../../actions';
 import Button from '../common/button';
 
 class EditForm extends React.Component {
@@ -17,24 +17,9 @@ class EditForm extends React.Component {
     };
   }
 
-  // initState = () => {
-  //   // const { id } = this.props.match;
-  //   // if(id) {
-  //   //   const { contacts }
-  //   // }
-  //
-  //
-  //   return {
-  //     nameValue: props.contact ? props.contact.name : '',
-  //     phoneValue: props.contact ? props.contact.phone : '',
-  //     contactID: props.contact ? props.contact.id : '',
-  //     isNameValid: true,
-  //     isPhoneValid: true,
-  //   };
-  // }
-
   handleSaveClick = (e) => {
     e.preventDefault();
+
     const { handleSaveClick, history } = this.props;
     const { nameValue, phoneValue, contactID } = this.state;
 
@@ -70,7 +55,7 @@ class EditForm extends React.Component {
   handlePhoneInputChange = (e) => {
     const character = e.target.value;
 
-    if (/^\d*$/.test(character)) {
+    if (/^\d*$/.test(character) && character) {
       this.setState({
         phoneValue: character,
         isNameValid: true,
@@ -108,9 +93,14 @@ class EditForm extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   handleSaveClick: (contact) => {
-    dispatch(addContact(contact));
+    const { id } = ownProps.match.params;
+    if (id) {
+      dispatch(editContact(contact));
+    } else {
+      dispatch(addContact(contact));
+    }
   },
 });
 
@@ -138,8 +128,9 @@ EditForm.propTypes = {
       PropTypes.string,
       PropTypes.number,
     ]),
-    onDeleteClick: PropTypes.func,
   }),
+  // eslint-disable-next-line react/forbid-prop-types
+  history: PropTypes.object.isRequired,
 };
 
 EditForm.defaultProps = {

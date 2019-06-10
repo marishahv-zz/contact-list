@@ -12,7 +12,13 @@ const initialState = {
   searchValue: '',
 };
 
-const store = createStore(rootReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(
+  rootReducer,
+  initialState,
+  // eslint-disable-next-line no-undef,no-underscore-dangle,no-underscore-dangle
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

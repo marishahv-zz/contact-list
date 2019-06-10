@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import { contactsReduser } from './contactsReduser';
+import contactsReducer from './contactsReducer';
+import filterReducer from './filterReducer';
 
 export default combineReducers({
-  contacts: contactsReduser,
+  contacts: contactsReducer,
+  searchValue: filterReducer,
 });
