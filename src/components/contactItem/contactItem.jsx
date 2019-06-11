@@ -1,31 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Button from '../common/button';
+import { deleteContact, clearFilter } from '../../actions';
 
-export default class ContactItem extends React.Component {
-  deleteClickHandler = () => {
-    const { contact: { id, onDeleteClick } } = this.props;
-    onDeleteClick(id);
+const ContactItem = ({ contact: { id, name, phone }, onEditClick, onDeleteClick }) => (
+  <tr>
+    <td>{name}</td>
+    <td>{phone}</td>
+    <td>
+      <Link to={`/edit/${id}`} className="btn btn-primary" onClick={onEditClick}>Edit</Link>
+      <Button colorStyle="btn-secondary" onClick={onDeleteClick} name="Delete" />
+    </td>
+  </tr>
+);
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { contact: { id } } = ownProps;
+
+  return {
+    onDeleteClick: () => dispatch(deleteContact(id)),
+    onEditClick: () => dispatch(clearFilter()),
   };
+};
 
-  render() {
-    const {
-      contact: { id, name, phone },
-    } = this.props;
-
-    return (
-      <tr>
-        <td>{name}</td>
-        <td>{phone}</td>
-        <td>
-          <Link to={`/edit/${id}`} className="btn btn-primary" onClick={this.editClickHandler}>Edit</Link>
-          <Button colorStyle="btn-secondary" onClick={this.deleteClickHandler} name="Delete" />
-        </td>
-      </tr>
-    );
-  }
-}
+export default connect(null, mapDispatchToProps)(ContactItem);
 
 ContactItem.propTypes = {
   contact: PropTypes.shape({
@@ -35,6 +35,7 @@ ContactItem.propTypes = {
       PropTypes.string,
       PropTypes.number,
     ]),
-    onDeleteClick: PropTypes.func,
   }).isRequired,
+  onEditClick: PropTypes.func.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
 };
