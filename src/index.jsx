@@ -22,6 +22,5 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <App />
-    {/* eslint-disable-next-line no-undef */}
   </Provider>, document.getElementById('root'),
 );
